@@ -9,50 +9,79 @@ To develop a python control code to move the mobilerobot along the predefined pa
 
 ## Procedure
 
-Step1:
+Step1: Start Program
 
-<br/>
+Step2: Use from output import robot.
 
-Step2:
+Step3: Choose the x,y,z - axis movement distance(meters).
 
-<br/>
+Step4: Give ep_chassis.move to move straight.
 
-Step3:
+Step5: Give time.sleep() for a break.
 
-<br/>
+Step6: Give ep_chassis.drive_speed to have a circular movement.
 
-Step4:
-
-<br/>
-
-Step5:
-
-<br/>
+Step7: End Program
 
 ## Program
 ```python
 from robomaster import robot
 import time
+from robomaster import camera
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     ep_robot = robot.Robot()
     ep_robot.initialize(conn_type="ap")
 
     ep_chassis = ep_robot.chassis
 
-    ## Write your code here
+    ep_led = ep_robot.led
 
+    ep_camera = ep_robot.camera
 
+    '''
+    x = x-axis movement distance,( meters) [-5,5]
+    y = y-axis movement distance,( meters) [-5,5]
+    z = rotation about z axis ( degree)[-180,180]
+    xy_speed = xy axis movement speed,( unit meter/second) [0.5,2]
+    '''
+    print("Camera streaming started...")
+    ep_camera.start_video_stream(display=True, resolution=camera.STREAM_360P)    
+    
+    ep_chassis.move(x=2, y=0, z=0, xy_speed=1).wait_for_completed()
+
+    ep_chassis.move(x=0, y=0, z=135, xy_speed=1).wait_for_completed()
+    
+    ep_led.set_led(comp="all",r=255,g=0,b=0,effect="on")   
+    time.sleep(2)
+
+    ep_chassis.move(x=1, y=0, z=0, xy_speed=1).wait_for_completed()
+
+    ep_chassis.move(x=0, y=0, z=-90, xy_speed=1).wait_for_completed()
+
+    ep_led.set_led(comp="all",r=0,g=255,b=0,effect="on")
+    time.sleep(2)
+
+    ep_chassis.move(x=1, y=0, z=0, xy_speed=1).wait_for_completed()
+     
+    ep_chassis.move(x=0, y=0, z=135, xy_speed=1).wait_for_completed()
+    
+    ep_chassis.move(x=2, y=0, z=0, xy_speed=1).wait_for_completed()
 
     
+
+    ep_camera.stop_video_stream()
+    print("Stopped video streaming...")
+
     ep_robot.close()
+
 ```
 
 ## MobileRobot Movement Image:
 
-![robo](./img/robomaster.png)
+![robo](1.jpg)
 
-Insert image here
+
 
 
 <br/>
@@ -64,11 +93,8 @@ Insert image here
 
 Upload your video in Youtube and paste your video-id here
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+Youtube Link :[https://youtu.be/grw6xTNUb70 ](https://youtu.be/grw6xTNUb70)
 
-<br/>
-<br/>
-<br/>
 <br/>
 
 ## Result:
